@@ -2,6 +2,8 @@ import React from "react";
 import { Paper, Typography, Button, makeStyles } from "@material-ui/core";
 import { Cliente } from "../interfaces/Cliente";
 import * as H from "history";
+import { useDispatch } from "react-redux";
+import { setUser } from "../reducers/user";
 
 type props = {
   cliente: Cliente;
@@ -21,6 +23,13 @@ const useStyles = makeStyles(() => ({
 
 export const ClienteEncontrado: React.FC<props> = ({ cliente, history }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const SaveUser = (cliente: Cliente) => {
+    dispatch(setUser({ user: cliente }));
+    history.push("/valores");
+  };
+
   return (
     <Paper className={classes.Paper}>
       <Typography color="textSecondary" variant="h6">
@@ -37,7 +46,7 @@ export const ClienteEncontrado: React.FC<props> = ({ cliente, history }) => {
         variant="contained"
         style={{ minHeight: 50 }}
         onClick={() => {
-          history.push("/valores");
+          SaveUser(cliente);
         }}
         fullWidth
       >
