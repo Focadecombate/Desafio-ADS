@@ -29,7 +29,7 @@ export const Logo: React.FC<Props> = ({ texto }) => {
           <AllInboxRounded fontSize="inherit" color="secondary" />
         </div>
         <div style={{ maxWidth: "10em" }}>
-          <Typography variant="h5" color="primary">
+          <Typography variant="h6" color="primary">
             {texto}
           </Typography>
         </div>

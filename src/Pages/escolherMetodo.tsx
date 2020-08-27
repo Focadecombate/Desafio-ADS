@@ -7,9 +7,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Logo } from "../Components/logo";
-import { RouteChildrenProps } from "react-router-dom";
-
-interface Props extends RouteChildrenProps {}
+import { Props } from "../interfaces/PropsDef";
 
 const useStyles = makeStyles(() => ({
   Button: {
@@ -24,7 +22,9 @@ export const EscolherMetodo: React.FC<Props> = ({ history }) => {
   const classes = useStyles();
   return (
     <>
-      <Logo texto="Solicitar Emprestimo" />
+      <Container maxWidth="md">
+        <Logo texto="Solicitar Emprestimo" />
+      </Container>
       <Container maxWidth="xs" style={{ textAlign: "center", padding: 16 }}>
         <Grid container justify="space-around" alignContent="center">
           <Grid item lg={12} md={12} sm={12} xs={12}>
