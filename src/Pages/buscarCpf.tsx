@@ -9,29 +9,22 @@ import {
 import { Logo } from "../Components/logo";
 import { ClienteEncontrado } from "../Components/ClienteEncontrado";
 import { Cliente } from "../interfaces/Cliente";
-import { useDispatch } from "react-redux";
-import { setUser } from "../reducers/user";
 import { Props } from "../interfaces/PropsDef";
 import { ApiServices } from "../services/api";
 
 export const BuscarCpf: React.FC<Props> = ({ history }) => {
-  const dispatch = useDispatch();
-  const [cliente, SetCliente] = useState<Cliente>();
+  const [cliente, SetCliente] = useState<Cliente[]>();
+  const [open, SetOpen] = useState(false);
   useEffect(() => {
     async function GetUser() {
       const Cliente = await ApiServices.GetUser();
       if (Cliente) {
-        return Cliente;
+        SetCliente(Cliente);
       }
     }
     GetUser();
-  });
+  }, []);
 
-  useEffect(() => {
-    if (cliente) {
-      dispatch(setUser({ user: cliente }));
-    }
-  }, [cliente, dispatch]);
   return (
     <>
       <Container maxWidth="md">
@@ -63,7 +56,7 @@ export const BuscarCpf: React.FC<Props> = ({ history }) => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  SetCliente(teste);
+                  SetOpen(true);
                 }}
                 color="primary"
               >
@@ -72,9 +65,11 @@ export const BuscarCpf: React.FC<Props> = ({ history }) => {
             </div>
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
-            {cliente ? (
-              <ClienteEncontrado cliente={cliente} history={history} />
-            ) : null}
+            {cliente && open
+              ? cliente.map((item) => {
+                  return <ClienteEncontrado cliente={item} history={history} />;
+                })
+              : null}
           </Grid>
         </Grid>
       </Container>

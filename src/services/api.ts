@@ -11,7 +11,7 @@ export const ApiServices = {
         };
         const request = await fetch(URL, requestInfo);
         if (request.ok) {
-            const response = await request.json() as Cliente;
+            const response = await request.json() as Cliente[];
             return response;
         }
     }
