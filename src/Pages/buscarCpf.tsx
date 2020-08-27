@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   TextField,
@@ -12,17 +12,26 @@ import { Cliente } from "../interfaces/Cliente";
 import { useDispatch } from "react-redux";
 import { setUser } from "../reducers/user";
 import { Props } from "../interfaces/PropsDef";
+import { ApiServices } from "../services/api";
 
 export const BuscarCpf: React.FC<Props> = ({ history }) => {
-  const [cliente, SetCliente] = useState<Cliente>();
-
-  const teste: Cliente = {
-    nome: "Gustavo",
-    cpf: "999.999.999.99",
-  };
-
   const dispatch = useDispatch();
-  dispatch(setUser({ user: teste }));
+  const [cliente, SetCliente] = useState<Cliente>();
+  useEffect(() => {
+    async function GetUser() {
+      const Cliente = await ApiServices.GetUser();
+      if (Cliente) {
+        return Cliente;
+      }
+    }
+    GetUser();
+  });
+
+  useEffect(() => {
+    if (cliente) {
+      dispatch(setUser({ user: cliente }));
+    }
+  }, [cliente, dispatch]);
   return (
     <>
       <Container maxWidth="md">
