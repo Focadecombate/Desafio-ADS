@@ -6,22 +6,28 @@ import {
   Button,
   Container,
 } from "@material-ui/core";
-import { RouteChildrenProps } from "react-router-dom";
 import { Logo } from "../Components/logo";
 import { ClienteEncontrado } from "../Components/ClienteEncontrado";
-import { Cliente } from "./Cliente";
+import { Cliente } from "../interfaces/Cliente";
+import { useDispatch } from "react-redux";
+import { setUser } from "../reducers/user";
+import { Props } from "../interfaces/PropsDef";
 
-interface props extends RouteChildrenProps {}
-
-export const BuscarCpf: React.FC<props> = () => {
+export const BuscarCpf: React.FC<Props> = ({ history }) => {
   const [cliente, SetCliente] = useState<Cliente>();
+
   const teste: Cliente = {
     nome: "Gustavo",
     cpf: "999.999.999.99",
   };
+
+  const dispatch = useDispatch();
+  dispatch(setUser({ user: teste }));
   return (
     <>
-      <Logo texto="Solicitar Emprestimo" />
+      <Container maxWidth="md">
+        <Logo texto="Solicitar Emprestimo" />
+      </Container>
       <Container maxWidth="sm">
         <Grid container spacing={2} justify="center">
           <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -57,7 +63,9 @@ export const BuscarCpf: React.FC<props> = () => {
             </div>
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
-            {cliente ? <ClienteEncontrado cliente={cliente} /> : null}
+            {cliente ? (
+              <ClienteEncontrado cliente={cliente} history={history} />
+            ) : null}
           </Grid>
         </Grid>
       </Container>

@@ -6,7 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { IconButton } from "@material-ui/core";
-import { Menu, AccountBalance, MonetizationOn } from "@material-ui/icons";
+import { Menu, Home } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,14 +51,11 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {["Simulação de Taxa", "Solicitar Emprestimo"].map((text, index) => (
-          <Link
-            to={text.length <= 17 ? "/" : "emprestimo"}
-            className={classes.text}
-          >
+        {["Inicio"].map((text) => (
+          <Link id={text} key={text} to={"/"} className={classes.text}>
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <MonetizationOn /> : <AccountBalance />}
+                <Home />
               </ListItemIcon>
               <ListItemText primary={text} color="textPrimary" />
             </ListItem>
